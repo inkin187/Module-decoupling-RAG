@@ -1,0 +1,5 @@
+2025-06-04 20:05:49,168 - local_embedding - 8603206144 - INFO : Using huggingface as model engine to load embeddings
+2025-06-04 20:05:49,301 - config - 8603206144 - INFO : PyTorch version 2.2.0 available.
+2025-06-04 20:05:49,588 - SentenceTransformer - 8603206144 - INFO : Load pretrained SentenceTransformer: /Users/ethan/Documents/projects/models/bge-large-zh
+2025-06-04 20:05:51,339 - utils - 8603206144 - INFO : Loading /Users/ethan/Documents/projects/models/bge-reranker-large as model reranker
+2025-06-04 20:05:56,364 - main - 8603206144 - INFO : =========================Starting Service=========================

@@ -1,0 +1,146 @@
+vector_store:
+  # 向量数据库参数
+
+  type: milvus
+  # 向量数据库类型，可选项：{milvus, chroma, faiss}.
+  # Type: str
+  # ENV Variable: APP_VECTOR_STORE_TYPE
+
+  host: 127.0.0.1
+  # 向量数据库ip地址.zhe
+  # Type: str
+  # ENV Variable: APP_VECTOR_STORE_HOST
+
+  port: 19530
+  # 向量数据库连接端口
+  # Type: str
+  # ENV Variable: APP_VECTOR_STORE_PORT
+
+  user: root
+  # 向量数据库连接用户名
+  # Type: str
+  # ENV Variable: APP_VECTOR_STORE_USER
+
+  password: Milvus
+  # 向量数据库连接密码
+  # Type: str
+  # ENV Variable: APP_VECTOR_STORE_PASSWORD
+
+  kwargs: {
+      "search_params":{"metric_type": "IP"},
+      "index_params":{"metric_type": "IP", "index_type":"HNSW", "params": {"M": 8, "efConstruction": 64}}
+  }
+  # 向量数据库配置信息，兼容不同类型数据库需求
+  # Type: str
+  # ENV Variable: APP_VECTOR_STORE_KWARGS
+
+
+llm:
+  # 大模型服务配置参数
+
+  api_key: sk-060b6299e81e4aadbf7e5bb77f65a637
+  # 大模型推理服务api_key
+  # Type: str
+  # ENV Variable: APP_LLM_API_KEY
+
+  base_url: https://api.deepseek.com
+  # 大模型推理服务url
+  # Type: str
+  # ENV Variable: APP_LLM_BASE_URL
+
+  model_name: deepseek-chat
+  # 大模型名称.
+  # Type: str
+  # ENV Variable: APP_LLM_MODEL_NAME
+
+text_splitter:
+  # The configuration for the Text Splitter.
+
+  splitter_name: ChineseRecursiveTextSplitter
+  # splitter class name.
+  # Type: str
+  # ENV Variable: APP_TEXT_SPLITTER_NAME
+
+  chunk_size: 500
+  # Chunk size.
+  # Type: int
+  # ENV Variable: APP_TEXT_SPLITTER_CHUNK_SIZE
+
+  chunk_overlap: 50
+  # Overlapping text length for splitting.
+  # Type: int
+  # ENV Variable: APP_TEXT_SPLITTER_CHUNK_OVERLAP
+
+  smaller_chunk_size: 0
+  # >= 0的整数； 设置为0代表不开启 smaller-chunk
+  # Type: int
+  # ENV Variable: APP_TEXT_SPLITTER_SMALLER_CHUNK_SIZE
+
+  summary: 0
+  # 是否开启summary
+  # Type: int
+  # ENV Variable: APP_TEXT_SPLITTER_SUMMARY
+
+embeddings:
+  # The configuration embedding models.
+
+  model_name_or_path: /Users/ethan/Documents/projects/models/bge-large-zh
+  # The name embedding search model from {huggingface, ...} or local model path.
+  # Type: str
+  # ENV Variable: APP_EMBEDDINGS_MODEL_NAME_OR_PATH
+
+  dimensions: 1024
+  # The dimensions of the embedding search model from huggingface.
+  # Type: int
+  # ENV Variable: APP_EMBEDDINGS_DIMENSIONS
+
+  model_engine: huggingface
+  # The backend name hosting the model, huggingface, openai are supported.
+  # Type: str
+  # ENV Variable: APP_EMBEDDINGS_MODEL_ENGINE
+
+reranker:
+  # The configuration embedding models.
+
+  model_name_or_path: /Users/ethan/Documents/projects/models/bge-reranker-large
+  # The name rerank model from {huggingface, ...} or local model path.
+  # Type: str
+  # ENV Variable: APP_RERANKER_MODEL_NAME_OR_PATH
+
+  type: rank
+  # The rank model type.
+  # Type: str
+  # ENV Variable: APP_RERANKER_TYPE
+
+prompts:
+  # The configuration for the prompts used for response generation.
+
+  chat_template: <指令> 你是一个乐于助人、尊重他人、诚实的助手。在安全的情况下，请尽可能提供帮助。请确保你的回答是积极的。</指令>\n已知信息： {context} \n问题： {query} \n答案：
+  # The chat prompt template guides the model to generate responses for queries.
+  # Type: str
+  # ENV Variable: APP_PROMPTS_CHAT_TEMPLATE
+
+#  rag_template: <指令> 根据已知信息，简洁和专业的来回答问题。若问题包含多个子问题，每个子问题都要给出答案。如果无法从中得到答案，请说 “根据已知信息无法回答该问题”，不允许在答案中添加编造成分，不要总结归纳，答案请使用中文。</指令>\n已知信息：{context} \n问题： {query} \n答案：
+  rag_template: <指令> 根据已知信息，简洁和专业的来回答问题。\n若问题包含多个子问题，每个子问题都要给出答案。\n如果无法从中得到答案，请说 “根据已知信息无法回答该问题”，不允许在答案中添加编造成分。\n若答案中包含多个并列的要点，请注意换行，保证输出格式对齐。\n不要总结归纳，答案请使用中文。\n</指令>\n\n已知信息：{context} \n问题： {query} \n答案：
+  # The RAG prompt template instructs the model to generate responses for queries while utilizing knowledge base.
+  # Type: str
+  # ENV Variable: APP_PROMPTS_RAG_TEMPLATE
+
+
+server:
+
+  api_server_host: 0.0.0.0
+  # Api Server host
+  # Type: str
+  # ENV Variable: APP_API_SERVER_HOST
+
+  api_server_port: 7861
+  # Api Server port
+  # Type: int
+  # ENV Variable: APP_API_SERVER_PORT
+
+  web_server_port: 9003
+  # Web Server port
+  # Type: int
+  # ENV Variable: APP_WEB_SERVER_PORT
+
